@@ -1,0 +1,27 @@
+.banner{
+    background-image: url("https://images.squarespace-cdn.com/content/v1/60106b264ec36d07561fa714/1613613744200-UWR384RAZA5WTWIIHW5U/learning-3245793.jpg?format=2500w"); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
+    height: 500px;
+
+    font-size: 30px;
+    color: white;
+
+    position: relative;
+
+}
+.message {
+    background-color: rgba(46, 45, 45, 0.769);
+    position: absolute;
+    top:30%;
+    left: 10%;
+    padding: 5px;
+    border-radius: 5px;
+}
+.button {
+    position: absolute;
+    top:50%;
+    left: 10%;
+}

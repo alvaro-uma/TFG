@@ -1,0 +1,38 @@
+.UserDataRow{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    width: 90%;
+    margin:auto;
+    margin-top:5px;
+
+    padding: 5px;
+
+    background-color: rgb(5 30 52);
+    color:white;
+
+    border-radius: 5px;
+}
+.UserDataRow button{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+.UserDataRow button:hover{
+    background-color: transparent;
+}
+.UserDataTitleRow{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    width: 90%;
+    margin:auto;
+    margin-top:5px;
+
+    padding: 5px;
+
+    background-color: white;
+    color:rgb(5 30 52);
+
+    border-radius: 5px;
+}

@@ -1,0 +1,25 @@
+.menuWrapper{
+    position: fixed;
+    background-color: rgb(5 30 52);
+    width: 15%;
+    height: 100vh;
+    box-shadow: 0 0 1.875em rgba(0, 0, 0, 0.2);
+    z-index: 9;
+}
+
+.menuWrapper ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+} 
+
+.menuElement {
+    padding: 5px;
+    margin:5px;
+    background-color: rgba(0, 0, 0, 0.09);
+    cursor: pointer;
+
+    color:white;
+    font-size: 16px;
+
+}

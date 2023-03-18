@@ -1,0 +1,56 @@
+.banner {
+  background-image: url("https://images.squarespace-cdn.com/content/v1/60106b264ec36d07561fa714/1613613744200-UWR384RAZA5WTWIIHW5U/learning-3245793.jpg?format=2500w");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  height: fit-content;
+  padding: 30px;
+
+  font-size: 30px;
+  color: white;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+
+  margin: auto;
+
+  max-width: 20%;
+  padding: 40px;
+
+  color: rgb(73, 43, 226);
+  background-color: white;
+
+  font-size: 18px;
+
+  border-radius: 10px;
+}
+.loginForm input {
+  max-width: 200px;
+  font-size: 20px;
+  text-align: center;
+
+  margin: 5px;
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid rgb(73, 43, 226);
+  background-color: white;
+}
+.submitButton {
+  margin: auto;
+  justify-content: center;
+  width: fit-content;
+}
