@@ -1,0 +1,15 @@
+.examTable{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+}
+.examTable th, .examTable td{
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+.visibility{
+    font-size: 25px;
+}

@@ -12,6 +12,6 @@ export const examJSONtoModel = (examJSON: string): Exam => {
         }
     }   );
 
-    return new Exam(exam.name, exam.description, questions, exam.asignatureID,new Date(exam.startDate), new Date(exam.endDate));
+    return new Exam(exam.name, exam.description, questions, exam.asignatureID,exam.startDate, exam.endDate);
 }
 

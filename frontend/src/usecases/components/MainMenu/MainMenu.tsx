@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { store } from "../../..";
 
 import styles from "./MainMenu.module.css";
 
+
 export const MainMenu = (props: any) => {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if(props.subjects.length > 0){
+      setLoading(false);
+    }else{
+      setLoading(true);
+    }
+  }, [props.subjects]);
   const changeMenuState = (newState: number) => {
     props.setState(newState);
   };
@@ -33,29 +42,27 @@ export const MainMenu = (props: any) => {
         </div>
       );
     case "prof":
-        return (
-            <div className={styles.menuWrapper}>
-              <ul>
-                <li
+      if(loading){
+        return <div className={styles.menuWrapper}><ul><li>Cargando ...</li></ul></div>;
+      }
+      return (
+          <div className={styles.menuWrapper}>
+            {props.subjects.map((subject: any) => {
+              return (
+                <li key={subject.id}
                   className={styles.menuElement}
                   onClick={() => {
-                    changeMenuState(1);
+                    changeMenuState(subject);
                   }}
                 >
-                  Inicio
+                  {subject.name}
                 </li>
-                {/* <li
-                  className={styles.menuElement}
-                  onClick={() => {
-                    changeMenuState(2);
-                  }}
-                >
-                  Alumnos
-                </li>
-                <li className={styles.menuElement}>Registro</li> */}
-              </ul>
-            </div>
-          );
+              );
+            })
+            }
+          </div>
+        );
+        
     default:
       return <div className={styles.menuWrapper}>MainMenu</div>;
   }

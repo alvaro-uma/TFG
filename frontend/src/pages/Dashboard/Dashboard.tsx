@@ -18,13 +18,19 @@ export function Dashboard() {
   //Ahora los estados que controlan los componentes
   //Menu Lateral
   const [menuOptionSelected, setMenuOptionSelected] = useState(1);
+  const [subjectsList, setSubjectsList] = useState <any[]> ([]);
   //Estado del board
 
   const API = new APIController();
 
   useEffect(() => {
-  
-
+    API.getSubjects(store.getState().token).then((response)=>{
+      listAdapter(response).then ((subjects) => {
+        if(typeof subjects != "boolean"){
+          setSubjectsList(subjects);
+        }
+      });
+    });
   }, []);
 
   //Componentes para cada rol
@@ -146,6 +152,7 @@ export function Dashboard() {
           role={store.getState().role}
           state={menuOptionSelected}
           setState={setMenuOptionSelected}
+          subjects = {subjectsList}
         />
         <div className={styles.content}>
           <Board />

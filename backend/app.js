@@ -23,9 +23,9 @@ const {IQuestion} = require("./models/IQuestion");
 const {examJSONtoModel} = require("./utils/parser");
 const {Subject} = require("./models/Subject");
 const {SubjectsCollection} = require("./database/SubjectsCollection");
-const {postSubject, deleteSubject, updateSubject, getSubject} = require("./controllers/subjectsController");
+const {postSubject, deleteSubject, updateSubject, getSubject, getSubjects} = require("./controllers/subjectsController");
 const {ExamsCollection} = require("./database/ExamsCollection");
-const {postExam, deleteExam, getExam, updateExam} = require("./controllers/examsController");
+const {postExam, deleteExam, getExam, updateExam, getExams, duplicateExam} = require("./controllers/examsController");
 
 
 
@@ -145,38 +145,17 @@ app.delete('/subject/:id', async (req, res) => { deleteSubject(req,res,SC)});
 app.get('/subject/:id', async (req, res) => { getSubject (req,res,SC)});
 app.put('/subject/:id', async (req, res) => { updateSubject (req,res,SC)});
 
+app.get('/subjects', async (req, res) => { getSubjects (req,res,SC,security)});
+
 //LAS ROUTAS SOBRE EXAMENES
 app.post('/exam', async (req, res) => { postExam(req,res,EC)});
 app.delete('/exam/:id', async (req, res) => { deleteExam(req,res,EC)});
 app.get('/exam/:id', async (req, res) => { getExam (req,res,EC)});
 app.put('/exam/:id', async (req, res) => { updateExam (req,res,EC)});
 
-//LAS GESTIONES DE LOS EXAMENES
-app.post('/exam', async (req, res) => {
-    //comentado dejo la parte que seria para comprobar el token
-    /*if (!req.headers.authorization) {
-        res
-            .status(403)
-            .send({ message: "Tu petición no tiene cabecera de autorización" });
-    }else{
-        const token = req.headers.authorization.split(" ")[1];
-        security.getUid(token).then((uid)=>{
-            console.log("UID->",uid);
-            if(uid == false){
-                //aqui hemos tenido problemas con el token , esto hay que concretarlo
-                res.status(404).send({message: "error"});
-            }else{
-                UC.getBy("uid" , uid).then((result)=>{
-                    res.status(200).send(JSON.stringify(result));
-                    console.log(JSON.stringify(result));
-                })
-            }
-        });
-    }*/
-    const examJSON = JSON.stringify(req.body);
-    const exam = examJSONtoModel(examJSON);
-    exam.show()
-});
+app.get('/exams/:asignatureID', async (req, res) => { getExams (req,res,EC,security)});
+app.post('/exam/duplicate/:examID', async (req, res) => { duplicateExam (req,res,EC,security)});
+
 
 //CONNECTION TO DATABASE
 run().catch(console.dir);

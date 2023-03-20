@@ -17,6 +17,17 @@ export class APIController implements IApiController {
 
     return response;
   }
+  //DELETE 
+  async delete(route: string, token: string) {
+    const response = await fetch(this.rootUrl + route, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      method: "DELETE",
+    });
+    return response;
+  }
 
   //POST
   async post(route: string, data: string, token: string) {
@@ -30,8 +41,19 @@ export class APIController implements IApiController {
       body: data,
     });
 
-    const code = response.status;
-    return code;
+    return response;
+  }
+  //PUT
+  async put(route: string, data: string, token: string) {
+    const response = await fetch(this.rootUrl + route, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      method: "PUT",
+      body: data,
+    });
+    return response;
   }
   async getSessionData(token : string ) : Promise <Response>{
     const response = await this.get(routes.getSessionData, token);
@@ -44,5 +66,26 @@ export class APIController implements IApiController {
   async getStudents(token: string) : Promise <Response> {
     const response = await this.get(routes.getStudents, token);
     return response
+  }
+  getSubjects(token: string) : Promise <Response> {
+    const response = this.get(routes.getSubjects, token);
+    return response
+  }
+  //exams
+  getExams(token: string, asignatueID : string) : Promise <Response> {
+    const response = this.get(routes.getExams + asignatueID, token);
+    return response
+  }
+  deleteExam(token: string, examID : string) : Promise <Response> {
+    const response = this.delete(routes.deleteExam + examID, token);
+    return response
+  }
+  duplicateExam(token: string, examID : string) : Promise <Response> {
+    const response = this.post(routes.duplicateExam + examID, "", token);
+    return response;
+  }
+  updateExam(token: string, examID : string, data : string) : Promise <Response> {
+    const response = this.put(routes.updateExam + examID, data, token);
+    return response;
   }
 }

@@ -2,10 +2,12 @@ import {IQuestion} from "./IQuestion";
 
 export class TestQuestion implements  IQuestion {
     id : string;
+    type : string ;
     question : string;
     options : string[];
     answer : string | number;
-    type : string ;
+
+
 
     constructor(id : string, question : string, options : string[], answer : string | number, type : string){
         this.id = id;

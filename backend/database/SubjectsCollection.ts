@@ -56,5 +56,14 @@ export class SubjectsCollection implements ICollection{
             return false;
         }
     }
-
+    async getSubjectsByOwnerID(ownerID : string){
+        try {
+            const docs = await this.coll.where('ownerID', '==', ownerID).get();
+            dataBaseNotifier("Subjects getted");
+            return JSON.stringify(docs.docs.map(doc => doc.data()));
+        } catch (e) {
+            console.log(e);
+            return  false;
+        }
+    }
 }

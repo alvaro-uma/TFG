@@ -56,5 +56,14 @@ export class ExamsCollection implements ICollection{
             return false;
         }
     }
-
+    async getExamsByAsignatureID(asignatureID : string){
+        try {
+            const docs = await this.coll.where("asignatureID", "==", asignatureID).get();
+            dataBaseNotifier("Exams getted by asignatureID");
+            return JSON.stringify(docs.docs.map(doc => doc.data()));
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
 }

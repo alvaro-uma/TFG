@@ -9,18 +9,21 @@ export class Subject implements IModel{
     name : string;
     description : string;
     exams : Exam[];
-    constructor(name : string, description : string){
+    ownerID : string; //por ahora vamos con 1 solo profesor por asignatura
+    constructor(name : string, description : string , ownerID : string){
         this.id = uuid.v4();
         this.name = name;
         this.description = description;
         this.exams = [];
+        this.ownerID = ownerID;
     }
     toJSON(){
         return {
             "id": this.id,
             "name": this.name,
             "description": this.description,
-            "exams": this.exams
+            "exams": this.exams,
+            "ownerID": this.ownerID
         };
     }
 }

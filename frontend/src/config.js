@@ -15,7 +15,12 @@ export const roles = {
 export const routes = {
     getSessionData :  "/getsessiondata",
     getTeachers : "/users/role/" + roles.profesor,
-    getStudents : "/users/role/" + roles.alumno
+    getStudents : "/users/role/" + roles.alumno,
+    getSubjects : "/subjects",
+    getExams : "/exams/",
+    deleteExam : "/exam/",
+    updateExam : "/exam/",
+    duplicateExam : "/exam/duplicate/",
 };
 
 //MENU 
