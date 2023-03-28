@@ -1,7 +1,9 @@
 //create a component that will display the exams list
 
+import { useEffect, useState } from "react";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { store } from "../../../../../..";
+import { listAdapter } from "../../../../../../adapters/listAdapter";
 import { APIController } from "../../../../../../services/APIController";
 import styles from "./examsTable.module.css";
 
@@ -58,6 +60,39 @@ const handleOperation = (exam: any, setRefresh: any, operation: Operation) => {
 };
 
 export const ExamsTable = (props: any) => {
+  
+  const [exams, setExams] = useState<any[]>(["No hay examenes"]);
+  const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
+  const API = new APIController();
+
+  useEffect(() => {
+    setExams([]);
+    if(exams.length > 0){
+        setLoading(false);
+    }else{
+        setLoading(true);
+    }
+    API.getExams(store.getState().token,props.menuState.id).then((response)=>{
+        console.log("response de get exams :",response.status);
+        listAdapter(response).then((updatedExams)=>{
+            console.log("Resultado de list adapter :",updatedExams);
+            if(typeof updatedExams != "boolean"){
+                if(updatedExams.length == 0){
+                    updatedExams = ["No hay examenes"];
+                }else{
+                    setExams(updatedExams);
+                }
+                setLoading(false);
+            }
+        })
+    })
+    setRefresh(false);
+    console.log("Refresh :",refresh);
+}, [refresh])
+  if(loading){
+    return <div className={styles.menuWrapper}><ul><li>Cargando ...</li></ul></div>;
+  }
   return (
     <table className={styles.examTable}>
       <thead>
@@ -70,15 +105,9 @@ export const ExamsTable = (props: any) => {
         </tr>
       </thead>
       <tbody>
-        {props.exams.map((exam: any) => (
+        {exams.map((exam: any) => (
           <tr key={exam.id}>
             <td>{exam.name}</td>
-            <td>
-              {new Date(
-                exam.endDate._seconds * 1000 +
-                  exam.endDate._nanoseconds / 1000000
-              ).toLocaleString()}
-            </td>
             <td>
               {new Date(
                 exam.startDate._seconds * 1000 +
@@ -86,17 +115,23 @@ export const ExamsTable = (props: any) => {
               ).toLocaleString()}
             </td>
             <td>
+              {new Date(
+                exam.endDate._seconds * 1000 +
+                  exam.endDate._nanoseconds / 1000000
+              ).toLocaleString()}
+            </td>
+            <td>
               <button>Editar</button>
               <button
                 onClick={() => {
-                  handleOperation(exam, props.setRefresh, Operation.DELETE);
+                  handleOperation(exam, setRefresh, Operation.DELETE);
                 }}
               >
                 Eliminar
               </button>
               <button
                 onClick={() => {
-                  handleOperation(exam, props.setRefresh, Operation.DUPLICATE);
+                  handleOperation(exam, setRefresh, Operation.DUPLICATE);
                 }}
               >
                 Duplicar
@@ -105,7 +140,7 @@ export const ExamsTable = (props: any) => {
                 onClick={() => {
                   handleOperation(
                     exam,
-                    props.setRefresh,
+                    setRefresh,
                     Operation.SWITCH_VISIBILITY
                   );
                 }}

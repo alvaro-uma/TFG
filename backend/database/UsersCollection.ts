@@ -52,7 +52,7 @@ export class UsersCollection {
             return ('No matching documents.');
         }
         const docs = snapshot.docs;
-        const results = [];
+        const results = <any> [];
         for (const doc of docs) {
             user = new User(
                 doc.data().email
@@ -61,7 +61,7 @@ export class UsersCollection {
                 ,doc.data().surname );
             results.push(user.toJSON());
         }
-
+            
         return JSON.stringify(results);
     }
 }

@@ -12,18 +12,21 @@ import { MainMenu } from "../../usecases/components/MainMenu/MainMenu";
 import { store } from "../..";
 import { sessionStates } from "../../domain/redux/actions";
 import { listAdapter } from "../../adapters/listAdapter";
-import { ProfDashboard } from "./components/prof/ProfDashboard";
+import { ProfBoard } from "./components/prof/ProfBoard";
+import { AdminBoard } from "./components/admin/AdminBoard";
 
 export function Dashboard() {
   //Ahora los estados que controlan los componentes
   //Menu Lateral
-  const [menuOptionSelected, setMenuOptionSelected] = useState(1);
+  const [menuOptionSelected, setMenuOptionSelected] = useState<string | number> ("INICIO"); //pude ser un string o un numero;
   const [subjectsList, setSubjectsList] = useState <any[]> ([]);
+  const [refresh, setRefresh] = useState(false); //Para refrescar el componente de la lista de asignaturas
   //Estado del board
 
   const API = new APIController();
 
   useEffect(() => {
+    console.log("useEffect de Dashboard");
     API.getSubjects(store.getState().token).then((response)=>{
       listAdapter(response).then ((subjects) => {
         if(typeof subjects != "boolean"){
@@ -31,113 +34,19 @@ export function Dashboard() {
         }
       });
     });
-  }, []);
+  }, [refresh]);
 
-  //Componentes para cada rol
-  const AdminBoard = () => {
-    const TeachersSection = () => {
-      const [teachersList, setTeachersList] = useState <any[] | string> ("vacio");
-      const [loading, setLoading] = useState(true);
-      useEffect(() => {
-        console.log("Admin board useffect")
-        API.getTeachers(store.getState().token).then((response)=>{
-          console.log("Ahora va list adapter")
-          listAdapter(response).then((teachersList) => {
-            console.log("Resultado de list adapter :",teachersList);
-            if(typeof teachersList != "boolean"){
-              setTeachersList(teachersList);
-              console.log("Estado lista :",teachersList);
-              setLoading(false);
-            }     
-          })
-        })
-      }, [])
-      return(
-        <div>
-          <UserDataTitleRow name="Nombre" surname="Apellidos" email="Correo"/>
-          {
-            loading ? "Cargando..." : ""
-          }
-          {typeof teachersList!= "string" ? 
-          teachersList.map((teacher : any)=>{
-            console.log(teacher);
-            return <UserDataRow key={teacher.email} name={teacher.name} surname={teacher.surname} email={teacher.email}/>
-          })
-          :""
-          } 
-
-        </div>
-      );
-      //
-    };
-    //
-    //
-    //
-    const StudentsSection = () => {
-      const [StudentsList, setStudentsList] = useState <any[] | string> ("vacio");
-      const [loading, setLoading] = useState(true);
-      useEffect(() => {
-        console.log("Admin board useffect")
-        API.getStudents(store.getState().token).then((response)=>{
-          console.log("Ahora va list adapter")
-          listAdapter(response).then((StudentsList) => {
-            console.log("Resultado de list adapter :",StudentsList);
-            if(typeof StudentsList != "boolean"){
-              setStudentsList(StudentsList);
-              console.log("Estado lista :",StudentsList);
-              setLoading(false);
-            }     
-          })
-        })
-      }, [])
-      return(
-        <div>
-          <UserDataTitleRow name="Nombre" surname="Apellidos" email="Correo"/>
-          {
-            loading ? "Cargando..." : ""
-          }
-          {typeof StudentsList!= "string" ? 
-          StudentsList.map((student : any)=>{
-            console.log(student);
-            return <UserDataRow key={student.email} name={student.name} surname={student.surname} email={student.email}/>
-          })
-          :""
-          } 
-
-        </div>
-      );
-      //
-    };
-    //
-    //
-    //
-    //
-    switch (menuOptionSelected) {
-      case 1:
-        return (
-          <div>
-            <TeachersSection />
-          </div>
-        );
-        case 2:
-          return (
-            <div>
-              <StudentsSection />
-            </div>
-          );
-      default:
-        return <div>Opcion de menu no valida</div>;
-    }
-  };
 
   const Board = () => {
     switch (store.getState().role) {
       case "admin":
-        return <AdminBoard />;
+        //return <AdminBoard menuState={menuOptionSelected}/>;
 
       case "prof":
-        return <ProfDashboard menuState={menuOptionSelected} setMenu={menuOptionSelected}/>
-
+        return <ProfBoard menuState={menuOptionSelected} setMenu={menuOptionSelected} setRefresh={setRefresh}/>
+      
+      case "student":
+        return <div>Estudiante</div>;
       default:
         return <div>nada</div>;
         break;

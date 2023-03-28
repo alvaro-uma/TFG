@@ -21,6 +21,8 @@ export const routes = {
     deleteExam : "/exam/",
     updateExam : "/exam/",
     duplicateExam : "/exam/duplicate/",
+    createExam : "/exam",
+    getUsers : "/users/getusersfromsubject",
 };
 
 //MENU 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { BiPlus } from "react-icons/bi";
 import { store } from "../../..";
 
 import styles from "./MainMenu.module.css";
@@ -47,6 +48,7 @@ export const MainMenu = (props: any) => {
       }
       return (
           <div className={styles.menuWrapper}>
+            <li className={styles.menuElement} onClick={()=>{props.setState("INICIO")}}>Inicio</li>
             {props.subjects.map((subject: any) => {
               return (
                 <li key={subject.id}

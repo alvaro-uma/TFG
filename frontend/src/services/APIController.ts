@@ -71,6 +71,7 @@ export class APIController implements IApiController {
     const response = this.get(routes.getSubjects, token);
     return response
   }
+
   //exams
   getExams(token: string, asignatueID : string) : Promise <Response> {
     const response = this.get(routes.getExams + asignatueID, token);
@@ -80,12 +81,24 @@ export class APIController implements IApiController {
     const response = this.delete(routes.deleteExam + examID, token);
     return response
   }
+  createExam(token: string, data : string) : Promise <Response> {
+    const response = this.post(routes.createExam, data, token);
+    return response;
+  }
   duplicateExam(token: string, examID : string) : Promise <Response> {
     const response = this.post(routes.duplicateExam + examID, "", token);
     return response;
   }
   updateExam(token: string, examID : string, data : string) : Promise <Response> {
     const response = this.put(routes.updateExam + examID, data, token);
+    return response;
+  }
+
+  //users
+  getStudentsFromAsignature(token: string,ids : string[]) : Promise <Response> {
+    const JSONstring = JSON.stringify({"ids":ids});
+    console.log("Se estan pidiendo : ",JSONstring);
+    const response = this.post(routes.getUsers, JSONstring, token);
     return response;
   }
 }

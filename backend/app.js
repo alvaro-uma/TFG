@@ -26,6 +26,7 @@ const {SubjectsCollection} = require("./database/SubjectsCollection");
 const {postSubject, deleteSubject, updateSubject, getSubject, getSubjects} = require("./controllers/subjectsController");
 const {ExamsCollection} = require("./database/ExamsCollection");
 const {postExam, deleteExam, getExam, updateExam, getExams, duplicateExam} = require("./controllers/examsController");
+const {getUsers} = require("./controllers/usersController");
 
 
 
@@ -154,7 +155,11 @@ app.get('/exam/:id', async (req, res) => { getExam (req,res,EC)});
 app.put('/exam/:id', async (req, res) => { updateExam (req,res,EC)});
 
 app.get('/exams/:asignatureID', async (req, res) => { getExams (req,res,EC,security)});
-app.post('/exam/duplicate/:examID', async (req, res) => { duplicateExam (req,res,EC,security)});
+app.post('/exam/duplicate/:e    xamID', async (req, res) => { duplicateExam (req,res,EC,security)});
+
+//LAS RUTAS SOBRE USUARUIOS
+
+app.post('/users/getusersfromsubject', async (req, res) => { getUsers (req,res,UC,security)});
 
 
 //CONNECTION TO DATABASE

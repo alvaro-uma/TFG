@@ -13,6 +13,7 @@ export const postExam = (req : Request, res : Response , EC : ExamsCollection) =
             res.status(200).send("OK");
         }else{
             res.status(500).send("ERROR");
+            console.log(result);
         }
     } );
 }
