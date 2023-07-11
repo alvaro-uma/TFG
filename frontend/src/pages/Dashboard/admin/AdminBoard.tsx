@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { store } from "../../../..";
-import { listAdapter } from "../../../../adapters/listAdapter";
-import { APIController } from "../../../../services/APIController";
-import { UserDataTitleRow, UserDataRow } from "../../../../usecases/components/UserDataRow/UserDataRow";
+import { store } from "../../..";
+import { listAdapter } from "../../../adapters/listAdapter";
+import { APIController } from "../../../services/APIController";
+import { UserDataTitleRow, UserDataRow } from "../../../usecases/components/UserDataRow/UserDataRow";
 
 
 export const AdminBoard = (props : any) => {

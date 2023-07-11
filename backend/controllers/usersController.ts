@@ -20,3 +20,12 @@ export const getUsers = (req : Request, res : Response , UC : UsersCollection) =
         res.status(500).send("ERROR:no ids provided");
     }
 }
+
+
+
+export const subscribeToSubject = (req : Request, res : Response , UC : UsersCollection) => {
+    console.log("SUBSCRIBE TO SUBJECT");       
+}
+export const unsubscribeFromSubject = (req : Request, res : Response , UC : UsersCollection) => {
+    console.log("UNSUBSCRIBE FROM SUBJECT");       
+}

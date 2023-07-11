@@ -3,6 +3,8 @@ import Auth = auth.Auth;
 import DecodedIdToken = auth.DecodedIdToken;
 import {ICollection} from "./ICollection";
 import {UsersCollection} from "./UsersCollection";
+import { Response } from 'express';
+import { Request } from 'express';
 
 
 const permissionsMap : { [key: string]: { [key: string]: { [key: string]: boolean; }; }; } = {
@@ -33,7 +35,9 @@ const permissionsMap : { [key: string]: { [key: string]: { [key: string]: boolea
     }
 }
 
-
+interface UID{
+    uid:string;
+}
 
 
 export class Security {
@@ -55,23 +59,37 @@ export class Security {
     }
 
     //Esto hay que probarlo todavia
-    execute(token: string,UC : UsersCollection, operation : string ,collection : string,callback : () => any) {
-        this.getUid(token).then((uid)=>{
-            console.log("TOKEN DECODED->",uid);
-            if(uid == false){
-                return false;
-            }else{
-                UC.getBy("uid",uid.toString()).then((results)=>{
+    async execute(UC : UsersCollection, operation : string ,collection : string,req:Request, res : Response) {
+        console.log("EXECUTING SECURITY");
+        if (!req.headers || !req.headers.authorization) {
+            console.log("ERROR:no token provided");
+            res.status(500).send("ERROR:no token provided");
+            return false;
+
+        }else{
+            const token = req.headers.authorization.split(" ")[1];
+                const uid = await this.getUid(token);
+                console.log("TOKEN DECODED->",uid);
+                if(uid == false){
+                    console.log("ERROR:invalid token");
+                    res.status(500).send("ERROR:invalid token");
+                    return false;
+                }else{
+                    const results = await UC.getBy("uid",uid.toString());
                     if(results.length == 0){
+                        res.status(500).send("ERROR:user not found");
                         return false;
                     }
                     const role = JSON.parse(results)[0].role;
                     if(this.checkPermission(role,collection,operation)) {
-                        return callback();
+                        console.log("PERMISSION GRANTED");
+                        return uid;
                     }
-                    return false;
-                });
-            }
-        });
+
+                }
+
+        }
+        res.status(500).send("ERROR:you don't have permission to do this operation");
+        return false;
     }
 }

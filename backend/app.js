@@ -146,7 +146,7 @@ app.delete('/subject/:id', async (req, res) => { deleteSubject(req,res,SC)});
 app.get('/subject/:id', async (req, res) => { getSubject (req,res,SC)});
 app.put('/subject/:id', async (req, res) => { updateSubject (req,res,SC)});
 
-app.get('/subjects', async (req, res) => { getSubjects (req,res,SC,security)});
+app.get('/subjects', async (req, res) => { getSubjects (req,res,UC,SC,security)});
 
 //LAS ROUTAS SOBRE EXAMENES
 app.post('/exam', async (req, res) => { postExam(req,res,EC)});
@@ -155,11 +155,12 @@ app.get('/exam/:id', async (req, res) => { getExam (req,res,EC)});
 app.put('/exam/:id', async (req, res) => { updateExam (req,res,EC)});
 
 app.get('/exams/:asignatureID', async (req, res) => { getExams (req,res,EC,security)});
-app.post('/exam/duplicate/:e    xamID', async (req, res) => { duplicateExam (req,res,EC,security)});
+app.post('/exam/duplicate/:examID', async (req, res) => { duplicateExam (req,res,EC,security)});
 
-//LAS RUTAS SOBRE USUARUIOS
-
+//LAS RUTAS SOBRE USUARIOS
 app.post('/users/getusersfromsubject', async (req, res) => { getUsers (req,res,UC,security)});
+app.post('/users/subscribetosubject', async (req, res) => { subscribeToSubject (req,res,UC,security)});
+app.post('/users/unsubscribetosubject', async (req, res) => { unsubscribeToSubject (req,res,UC,security)});
 
 
 //CONNECTION TO DATABASE

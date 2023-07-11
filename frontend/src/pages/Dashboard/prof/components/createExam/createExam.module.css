@@ -1,5 +1,5 @@
 .question{
-    width: 50%;
+
     margin: 10px 0;
     padding: 10px;
     border: 1px solid #ccc;
@@ -12,4 +12,15 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #fff;
+}
+.general_info {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+.questions_space {
+    margin: 20px;
+}
+.questions_space button {
+    margin: 10px;
 }
