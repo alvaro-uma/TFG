@@ -23,7 +23,7 @@ const {IQuestion} = require("./models/IQuestion");
 const {examJSONtoModel} = require("./utils/parser");
 const {Subject} = require("./models/Subject");
 const {SubjectsCollection} = require("./database/SubjectsCollection");
-const {postSubject, deleteSubject, updateSubject, getSubject, getSubjects} = require("./controllers/subjectsController");
+const {postSubject, deleteSubject, updateSubject, getSubject, getSubjects, subscribeToSubject, unsubscribeFromSubject} = require("./controllers/subjectsController");
 const {ExamsCollection} = require("./database/ExamsCollection");
 const {postExam, deleteExam, getExam, updateExam, getExams, duplicateExam} = require("./controllers/examsController");
 const {getUsers} = require("./controllers/usersController");
@@ -148,6 +148,9 @@ app.put('/subject/:id', async (req, res) => { updateSubject (req,res,SC)});
 
 app.get('/subjects', async (req, res) => { getSubjects (req,res,UC,SC,security)});
 
+app.post('/subjects/subscribe', async (req, res) => { subscribeToSubject (req,res,UC,security)});
+app.delete('/subjects/unsubscribe', async (req, res) => { unsubscribeFromSubject (req,res,UC,security)});
+
 //LAS ROUTAS SOBRE EXAMENES
 app.post('/exam', async (req, res) => { postExam(req,res,EC)});
 app.delete('/exam/:id', async (req, res) => { deleteExam(req,res,EC)});
@@ -159,8 +162,8 @@ app.post('/exam/duplicate/:examID', async (req, res) => { duplicateExam (req,res
 
 //LAS RUTAS SOBRE USUARIOS
 app.post('/users/getusersfromsubject', async (req, res) => { getUsers (req,res,UC,security)});
-app.post('/users/subscribetosubject', async (req, res) => { subscribeToSubject (req,res,UC,security)});
-app.post('/users/unsubscribetosubject', async (req, res) => { unsubscribeToSubject (req,res,UC,security)});
+
+
 
 
 //CONNECTION TO DATABASE

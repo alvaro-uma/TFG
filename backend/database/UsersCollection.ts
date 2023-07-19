@@ -49,7 +49,7 @@ export class UsersCollection {
         let user : User ;
         if (snapshot.empty) {
             console.log('No matching documents.');
-            return ('No matching documents.');
+            return false;
         }
         const docs = snapshot.docs;
         const results = <any> [];

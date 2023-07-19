@@ -15,17 +15,53 @@ const permissionsMap : { [key: string]: { [key: string]: { [key: string]: boolea
             "update": true,
             "get": true
             },
+        "users": {
+            "add": true,
+            "delete": true,
+            "update": true,
+            "get": true
         },
+        "exams": {
+            "add": true,
+            "delete": true,
+            "update": true,
+            "get": true
+        },
+    },
     "prof": {
+        "subjects": {
+            "add": true,
+            "delete": true,
+            "update": true,
+            "get": true
+            },
+            "users": {
+                "add": true,
+                "delete": true,
+                "update": true,
+                "get": true
+            },
+            "exams": {
+                "add": true,
+                "delete": true,
+                "update": true,
+                "get": true
+            },
+        },
+    "student": {
         "subjects": {
             "add": false,
             "delete": false,
             "update": false,
             "get": true
-            },
         },
-    "student": {
-        "subjects": {
+        "users": {
+            "add": false,
+            "delete": false,
+            "update": false,
+            "get": false
+        },
+        "exams": {
             "add": false,
             "delete": false,
             "update": false,
@@ -76,20 +112,19 @@ export class Security {
                     return false;
                 }else{
                     const results = await UC.getBy("uid",uid.toString());
-                    if(results.length == 0){
+                    if(results == false){
                         res.status(500).send("ERROR:user not found");
                         return false;
                     }
                     const role = JSON.parse(results)[0].role;
+                    console.log("ROLE->",role);
                     if(this.checkPermission(role,collection,operation)) {
                         console.log("PERMISSION GRANTED");
                         return uid;
                     }
-
                 }
-
         }
-        res.status(500).send("ERROR:you don't have permission to do this operation");
+        res.status(403).send("ERROR:you don't have permission to do this operation");
         return false;
     }
 }

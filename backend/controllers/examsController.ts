@@ -24,7 +24,6 @@ export const deleteExam = (req : Request, res : Response , EC : ExamsCollection)
     EC.delete(id).then((result)=>{
         if (result) {
             res.status(200).send("OK");
-
         }else{
             res.status(500).send("ERROR");
         }
@@ -44,8 +43,12 @@ export const getExam = (req : Request, res : Response , EC : ExamsCollection) =>
 
 export const updateExam = (req : Request, res : Response , EC : ExamsCollection) => {
     const id = req.params.id;
-    const startDate =  req.body.startDate._seconds +  req.body.startDate._nanoseconds/1000000000;
-    const endDate =  req.body.endDate._seconds +  req.body.endDate._nanoseconds/1000000000;
+
+    console.log(req.body.startDate);
+    console.log(req.body.endDate);
+
+    const startDate =  new Date(req.body.startDate).getTime() / 1000;
+    const endDate =  new Date(req.body.endDate).getTime() / 1000;
 
     const newExam = new Exam(req.body.name, req.body.description, req.body.questions , req.body.asignatureID ,startDate,endDate);
     newExam.visibility = req.body.visibility;
